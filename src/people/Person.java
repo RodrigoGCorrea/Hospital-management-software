@@ -1,20 +1,18 @@
-package person;
-
-import java.util.Date;
+package people;
 
 public class Person {
     private String name;
     private String cpf;
-    private String birth_date;
-    private String blood_type;
+    private String birthDate;
+    private String bloodType;
     private String gender;
 
-    public Person(String name, String cpf, String birth_date, String blood_type, String gender) {
+    public Person (String name, String cpf, String birthDate, String bloodType, String gender) {
         this.name = name;
-        this.birth_date = birth_date;
-        this.blood_type = blood_type;
-        this.gender = gender;
         this.cpf = cpf;
+        this.birthDate = birthDate;
+        this.bloodType = bloodType;
+        this.gender = gender;
     }
 
     public boolean check_cpf(){
@@ -39,12 +37,12 @@ public class Person {
         return false;
     }
 
-    public String getBirth_date() {
-        return birth_date;
+    public String getBirthDate() {
+        return birthDate;
     }
 
-    public String getBlood_type() {
-        return blood_type;
+    public String getBloodType() {
+        return bloodType;
     }
 
     public String getCpf() {
@@ -67,12 +65,12 @@ public class Person {
         this.cpf = cpf;
     }
 
-    public void setBirth_date(String birth_date) {
-        this.birth_date = birth_date;
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public void setBlood_type(String blood_type) {
-        this.blood_type = blood_type;
+    public void setBloodType(String bloodType) {
+        this.bloodType = bloodType;
     }
 
     public void setGender(String gender) {
