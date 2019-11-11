@@ -1,6 +1,8 @@
 package people;
 
-public class Person {
+import db.Savable;
+
+public class Person extends Savable {
     private String name;
     private String cpf;
     private String birthDate;

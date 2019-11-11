@@ -1,6 +1,5 @@
 package functions;
 
-import people.Doctor;
 import people.Patient;
 
 import java.util.ArrayList;
@@ -39,8 +38,7 @@ public class Creation {
         return aux;
     }
 
-    public Doctor CreateDoctor() {
+    public void CreateDoctor() {
         Scanner input = new Scanner(System.in);
-        
     }
 }
