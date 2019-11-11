@@ -1,7 +1,3 @@
-//import functions.Creation;
-//import people.Patient;
-
-import db.DB;
 import functions.Creation;
 import people.Patient;
 
