@@ -3,6 +3,8 @@ package controller;
 import db.Db;
 import model.facilities.Room;
 import model.misc.Cpf;
+import model.people.Doctor;
+import model.people.Nurse;
 import model.people.Patient;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class Creator extends Controller{
 
         boolean found = false;
         for (Room value : dataBase.roomList) {
-            if (!value.getRoom().equals(room)) {
+            if (value.getRoom().equals(room)) {
                 value.addPatient(patient);
                 found = true;
             }
@@ -26,11 +28,17 @@ public class Creator extends Controller{
             newRoom.addPatient(patient);
             dataBase.roomList.add(newRoom);
         }
-        
+
         dataBase.patientList.add(patient);
     }
 
-    public void CreateDoctor() {
-        Scanner input = new Scanner(System.in);
+    public void createDoctor(String name, Cpf cpf, String birthDate, String bloodType, String gender, ArrayList<String> specialties) {
+        Doctor doctor = new Doctor(name, cpf, birthDate, bloodType, gender, specialties);
+        dataBase.doctorList.add(doctor);
+    }
+
+    public void createNurse(String name, Cpf cpf, String birthDate, String bloodType, String gender) {
+        Nurse nurse = new Nurse(name, cpf, birthDate, bloodType, gender);
+        dataBase.nurseList.add(nurse);
     }
 }

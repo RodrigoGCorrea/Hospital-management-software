@@ -2,14 +2,21 @@ package model.people;
 
 import model.misc.Cpf;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Patient extends Person {
 
     private String healthInsurance;
-    private ArrayList diseases;
+    private List<String> diseases;
 
-    public Patient(String name, Cpf cpf, String birthDate, String bloodType, String gender, String healthInsurance, ArrayList diseases) {
+    public Patient(String name,
+                   Cpf cpf,
+                   String birthDate,
+                   String bloodType,
+                   String gender,
+                   String healthInsurance,
+                   List<String> diseases
+    ) {
         super(name, cpf, birthDate, bloodType, gender);
         this.healthInsurance = healthInsurance;
         this.diseases = diseases;
@@ -23,15 +30,11 @@ public class Patient extends Person {
         this.healthInsurance = healthInsurance;
     }
 
-    public ArrayList getDiseases() {
+    public List<String> getDiseases() {
         return diseases;
     }
 
-    public void setDiseases(ArrayList diseases) {
+    public void setDiseases(List<String> diseases) {
         this.diseases = diseases;
-    }
-
-    public void cureDisease(String disease){
-        this.diseases.remove(disease);
     }
 }

@@ -17,10 +17,6 @@ public class Room {
         return room;
     }
 
-    public void setRoom(String room) {
-        this.room = room;
-    }
-
     public void addPatient(Patient patient) {
         for (Patient value : patientList) {
             if (value.getCpf().equals(patient.getCpf())) {
@@ -28,5 +24,9 @@ public class Room {
             }
         }
         patientList.add(patient);
+    }
+
+    public List<Patient> getPatientList() {
+        return patientList;
     }
 }

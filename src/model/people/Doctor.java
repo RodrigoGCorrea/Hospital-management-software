@@ -7,8 +7,14 @@ import java.util.ArrayList;
 public class Doctor extends Staff{
     private ArrayList<String> specialties;
 
-    public Doctor(String name, Cpf cpf, String birthDate, String bloodType, String gender, ArrayList<Patient> patientsAssigned, ArrayList<String> specialties) {
-        super(name, cpf, birthDate, bloodType, gender, patientsAssigned);
+    public Doctor(String name,
+                  Cpf cpf,
+                  String birthDate,
+                  String bloodType,
+                  String gender,
+                  ArrayList<String> specialties
+    ) {
+        super(name, cpf, birthDate, bloodType, gender);
         this.specialties = specialties;
     }
 

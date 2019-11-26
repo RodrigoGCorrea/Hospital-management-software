@@ -1,6 +1,11 @@
 import controller.Creator;
+import controller.Deleter;
 import controller.Tracker;
+import model.facilities.Room;
 import model.misc.Cpf;
+import model.people.Doctor;
+import model.people.Nurse;
+import model.people.Patient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +17,7 @@ public class View {
 
     private static Creator creator = new Creator();
     private static Tracker tracker = new Tracker();
+    private static Deleter deleter = new Deleter();
 
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -19,7 +25,6 @@ public class View {
         String command;
 
         while (running) {
-            clear_console();
             show_main_menu();
             command = sc.nextLine();
 
@@ -66,32 +71,227 @@ public class View {
 
                     creator.createPatient(name, newCpf, birthDate, bloodType, gender, healthInsurance, room, diseases);
                     break;
-                case "BQ":
-                    System.out.println("Quartos");
+                case "CD":
+                    System.out.println("Inserir CPF do medico: ");
+                    cpf = sc.nextLine();
+
+                    if (tracker.searchDoctor(cpf) != null) {
+                        System.out.println("Medico já existente");
+                        break;
+                    }
+                    newCpf = new Cpf(cpf);
+                    if (!newCpf.checkCpf()) {
+                        System.out.println("CPF invalido, favor digitar novamente: ");
+                        newCpf.setCpf(sc.nextLine());
+                    }
+
+                    System.out.println("Inserir Nome do medico:");
+                    name = sc.nextLine();
+
+                    System.out.println("Inserir data de nascimento: ");
+                    birthDate = sc.nextLine();
+
+                    System.out.println("Inserir tipo sanguineo: ");
+                    bloodType = sc.nextLine();
+
+                    System.out.println("Inserir genero: ");
+                    gender = sc.nextLine();
+
+                    System.out.println("Inserir especialidades do medico (\"final\" para encerrar): ");
+                    ArrayList<String> specialties = new ArrayList<>();
+                    String specialty = sc.nextLine();
+                    while (!specialty.equals("final")){
+                        specialties.add(specialty);
+                        specialty = sc.nextLine();
+                    }
+
+                    creator.createDoctor(name, newCpf, birthDate, bloodType, gender, specialties);
                     break;
-                case "BP":
-                    System.out.println("Busca paciente");
+                case "CE":
+                    System.out.println("Inserir CPF do enfermeiro: ");
+                    cpf = sc.nextLine();
+
+                    if (tracker.searchNurse(cpf) != null) {
+                        System.out.println("Enfermeiro já existente");
+                        break;
+                    }
+                    newCpf = new Cpf(cpf);
+                    if (!newCpf.checkCpf()) {
+                        System.out.println("CPF invalido, favor digitar novamente: ");
+                        newCpf.setCpf(sc.nextLine());
+                    }
+
+                    System.out.println("Inserir Nome do enfermeiro:");
+                    name = sc.nextLine();
+
+                    System.out.println("Inserir data de nascimento: ");
+                    birthDate = sc.nextLine();
+
+                    System.out.println("Inserir tipo sanguineo: ");
+                    bloodType = sc.nextLine();
+
+                    System.out.println("Inserir genero: ");
+                    gender = sc.nextLine();
+
+                    creator.createNurse(name, newCpf, birthDate, bloodType, gender);
+
                     break;
-                case "AD":
-                    System.out.println("Busca paciente");
+                case "PP":
+                    System.out.println("Insira o cpf do paciente a ser procurado: ");
+                    cpf = sc.nextLine();
+                    Patient patient = tracker.searchPatient(cpf);
+                    if (patient == null) {
+                        System.out.println("Paciente nao existe");
+                        break;
+                    } else {
+                        System.out.printf("Nome: %s\n", patient.getName());
+                        System.out.printf("Cpf: %s\n", patient.getCpf());
+                        System.out.printf("Data de Nascimento: %s\n", patient.getBirthDate());
+                        System.out.printf("Tipo sanguineo: %s\n", patient.getBloodType());
+                        System.out.printf("Sexo: %s\n", patient.getGender());
+                        System.out.printf("Plano de Saude: %s\n", patient.getHealthInsurance());
+                        System.out.printf("Quarto: %s\n", tracker.searchRoomCpf(patient.getCpf()).getRoom());
+                        System.out.println("Doencas: ");
+                        for (String d : patient.getDiseases()) {
+                            System.out.printf("- %s\n", d);
+                        }
+                    }
                     break;
-                case "AE":
-                    System.out.println("Busca paciente");
+                case "PD":
+                    System.out.println("Insira o cpf do medico a ser procurado: ");
+                    cpf = sc.nextLine();
+                    Doctor doctor = tracker.searchDoctor(cpf);
+                    if (doctor == null) {
+                        System.out.println("Medico nao existe");
+                        break;
+                    } else {
+                        System.out.printf("Nome: %s\n", doctor.getName());
+                        System.out.printf("Cpf: %s\n", doctor.getCpf());
+                        System.out.printf("Data de Nascimento: %s\n", doctor.getBirthDate());
+                        System.out.printf("Tipo sanguineo: %s\n", doctor.getBloodType());
+                        System.out.printf("Sexo: %s\n", doctor.getGender());
+
+                        System.out.println("Especialidades: ");
+                        for (String s : doctor.getSpecialties()) {
+                            System.out.printf("- %s\n", s);
+                        }
+
+                        System.out.println("Pacientes: ");
+                        if (doctor.getPatientsAssigned().size() == 0) {
+                            System.out.println("Nenhum paciente associado");
+                            break;
+                        }
+                        for (Patient p : doctor.getPatientsAssigned()){
+                            System.out.printf("- Nome: %s, Cpf: %s\n", p.getName(), p.getCpf());
+                        }
+                    }
                     break;
-                case "AQ":
-                    System.out.println("Busca paciente");
+                case "PE":
+                    System.out.println("Insira o cpf do enfermeiro a ser procurado: ");
+                    cpf = sc.nextLine();
+                    Nurse nurse = tracker.searchNurse(cpf);
+                    if (nurse == null) {
+                        System.out.println("enfermeiro nao existe");
+                        break;
+                    } else {
+                        System.out.printf("Nome: %s\n", nurse.getName());
+                        System.out.printf("Cpf: %s\n", nurse.getCpf());
+                        System.out.printf("Data de Nascimento: %s\n", nurse.getBirthDate());
+                        System.out.printf("Tipo sanguineo: %s\n", nurse.getBloodType());
+                        System.out.printf("Sexo: %s\n", nurse.getGender());
+
+                        System.out.println("Pacientes: ");
+                        if (nurse.getPatientsAssigned().size() == 0) {
+                            System.out.println("Nenhum paciente associado");
+                            break;
+                        }
+                        for (Patient p : nurse.getPatientsAssigned()) {
+                            System.out.printf("- Nome: %s, Cpf: %s\n", p.getName(), p.getCpf());
+                        }
+                    }
                     break;
-                case "AS":
-                    System.out.println("Busca paciente");
+                case "PQ":
+                    System.out.println("Insira o numero do quarto: ");
+                    room = sc.nextLine();
+                    Room roomFound = tracker.searchRoom(room);
+                    if (roomFound == null) {
+                        System.out.println("Quarto nao existe");
+                        break;
+                    }
+                    for (Patient p : roomFound.getPatientList()) {
+                        System.out.printf("- Nome: %s, Cpf: %s\n", p.getName(), p.getCpf());
+                    }
                     break;
-                case "BD":
-                    System.out.println("Busca paciente");
+                case "DP":
+                    System.out.println("Insira o cpf do paciente a ser excluido: ");
+                    cpf = sc.nextLine();
+                    patient = tracker.searchPatient(cpf);
+                    if (patient == null) {
+                        System.out.println("Paciente nao existe");
+                        break;
+                    }
+                    Room r = tracker.searchRoomCpf(cpf);
+                    deleter.deletePatientFromRoom(r, patient);
+                    if (r.getPatientList().size() == 0) {
+                        deleter.deleteRoom(r);
+                    }
+                    deleter.deletePatientFromDoctor(tracker.searchDoctorsWithPatient(cpf), patient);
+                    deleter.deletePatientFromNurse(tracker.searchNursesWithPatient(cpf), patient);
+                    deleter.deletePatient(patient);
                     break;
-                case "BE":
-                    System.out.println("Busca paciente");
+                case "DD":
+                    System.out.println("Insira o cpf do medico a ser deletado: ");
+                    cpf = sc.nextLine();
+                    doctor = tracker.searchDoctor(cpf);
+                    if (doctor == null) {
+                        System.out.println("Medico nao existe");
+                        break;
+                    }
+                    deleter.deleteDoctor(doctor);
                     break;
-                case "BS":
-                    System.out.println("Busca paciente");
+                case "DE":
+                    System.out.println("Insira o cpf do enfermeiro a ser deletado: ");
+                    cpf = sc.nextLine();
+                    nurse = tracker.searchNurse(cpf);
+                    if (nurse == null) {
+                        System.out.println("enfermeiro nao existe");
+                        break;
+                    }
+                    deleter.deleteNurse(nurse);
+                    break;
+                case "ADP":
+                    System.out.println("Insira o cpf do medico: ");
+                    cpf = sc.nextLine();
+                    doctor = tracker.searchDoctor(cpf);
+                    if (doctor == null) {
+                        System.out.println("Medico nao existe");
+                        break;
+                    }
+                    System.out.println("Insira o cpf do paciente: ");
+                    cpf = sc.nextLine();
+                    patient = tracker.searchPatient(cpf);
+                    if (patient == null) {
+                        System.out.println("Paciente nao existe");
+                        break;
+                    }
+                    doctor.addPatient(patient);
+                    break;
+                case "AEP":
+                    System.out.println("Insira o cpf do enfermeiro: ");
+                    cpf = sc.nextLine();
+                    nurse = tracker.searchNurse(cpf);
+                    if (nurse == null) {
+                        System.out.println("enfermeiro nao existe");
+                        break;
+                    }
+                    System.out.println("Insira o cpf do paciente: ");
+                    cpf = sc.nextLine();
+                    patient = tracker.searchPatient(cpf);
+                    if (patient == null) {
+                        System.out.println("Paciente nao existe");
+                        break;
+                    }
+                    nurse.addPatient(patient);
                     break;
                 case "0":
                     running = false;
@@ -99,7 +299,7 @@ public class View {
                 default:
                     System.out.println("Comando não válido");
             }
-
+            System.out.println();
         }
     }
 
@@ -107,17 +307,12 @@ public class View {
 
         System.out.println("MENU");
         System.out.println("\n");
-        System.out.println("criar -> Paciente [CP] - Doutor [CD] - Enfermeiro [CE]");
-        System.out.println("procurar -> Paciente [PP] - Doutor [PD] - Enfermeiro [PE] - Quarto[PQ]");
-        System.out.println("Mostrar Todos -> Paciente [MP] - Doutor [MD] - Enfermeiro [ME] - Quarto[MQ]");
-        System.out.println("deletar -> Paciente [DP] - Doutor [DD] - Enfermeiro [DE]");
-        System.out.println("sair -> [0]");
+        System.out.println("Cadastro -> Paciente [CP] - Doutor [CD] - Enfermeiro [CE]");
+        System.out.println("Procurar -> Paciente [PP] - Doutor [PD] - Enfermeiro [PE] - Quarto[PQ]");
+        System.out.println("Deletar -> Paciente [DP] - Doutor [DD] - Enfermeiro [DE]");
+        System.out.println("Associar -> doutor a um paciente [ADP] - enfermeiro a um paciente [AEP]");
+        System.out.println("Sair -> [0]");
         System.out.print("> ");
     }
-
-
-    private static void clear_console() throws IOException, InterruptedException {
-//        new ProcessBuilder("clear").inheritIO().start().waitFor();
-    }
-
 }
+
