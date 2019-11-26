@@ -1,5 +1,7 @@
 package model.people;
 
+import model.misc.Cpf;
+
 import java.util.ArrayList;
 
 public class Patient extends Person {
@@ -7,7 +9,7 @@ public class Patient extends Person {
     private String healthInsurance;
     private ArrayList diseases;
 
-    public Patient(String name, String cpf, String birthDate, String bloodType, String gender, String healthInsurance, ArrayList diseases) {
+    public Patient(String name, Cpf cpf, String birthDate, String bloodType, String gender, String healthInsurance, ArrayList diseases) {
         super(name, cpf, birthDate, bloodType, gender);
         this.healthInsurance = healthInsurance;
         this.diseases = diseases;

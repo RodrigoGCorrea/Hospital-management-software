@@ -1,6 +1,9 @@
 import controller.Creator;
+import controller.Tracker;
+import model.misc.Cpf;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class View {
@@ -8,6 +11,7 @@ public class View {
     private static boolean running = true;
 
     private static Creator creator = new Creator();
+    private static Tracker tracker = new Tracker();
 
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -21,11 +25,49 @@ public class View {
 
             switch (command.toUpperCase()) {
                 case "CP":
-                    creator.CreatePatient();
+                    System.out.println("Inserir CPF do paciente: ");
+                    String cpf = sc.nextLine();
+
+                    if (tracker.searchPatient(cpf) != null) {
+                        System.out.println("paciente já existente");
+                        break;
+                    }
+                    Cpf newCpf = new Cpf(cpf);
+                    if (!newCpf.checkCpf()) {
+                        System.out.println("CPF invalido, favor digitar novamente: ");
+                        newCpf.setCpf(sc.nextLine());
+                    }
+
+                    System.out.println("Inserir Nome do Paciente:");
+                    String name = sc.nextLine();
+
+                    System.out.println("Inserir data de nascimento: ");
+                    String birthDate = sc.nextLine();
+
+                    System.out.println("Inserir tipo sanguineo: ");
+                    String bloodType = sc.nextLine();
+
+                    System.out.println("Inserir genero: ");
+                    String gender = sc.nextLine();
+
+                    System.out.println("Inserir plano de saude: ");
+                    String healthInsurance = sc.nextLine();
+
+                    System.out.println("Inserir quarto: ");
+                    String room = sc.nextLine();
+
+                    System.out.println("Inserir problemas do paciente (\"final\" para encerrar): ");
+                    ArrayList<String> diseases = new ArrayList<>();
+                    String disease = sc.nextLine();
+                    while (!disease.equals("final")){
+                        diseases.add(disease);
+                        disease = sc.nextLine();
+                    }
+
+                    creator.createPatient(name, newCpf, birthDate, bloodType, gender, healthInsurance, room, diseases);
                     break;
                 case "BQ":
                     System.out.println("Quartos");
-
                     break;
                 case "BP":
                     System.out.println("Busca paciente");
@@ -62,15 +104,14 @@ public class View {
     }
 
     private static void show_main_menu() {
-        final String style_bars = "--------------";
-        System.out.println(style_bars + "Hospital Management 0.1" + style_bars);
+
+        System.out.println("MENU");
         System.out.println("\n");
-        System.out.println(style_bars + "Check-in e busca" + style_bars);
-        System.out.println("Check-in Paciente [CP] -- Quartos [BQ] -- Pacientes [BP]");
-        System.out.println(style_bars + "Registro de funcionários" + style_bars);
-        System.out.println("Doutor [AD] -- Enfermeiro [AE] -- Quarto [AQ] -- Staff [AS]");
-        System.out.println(style_bars + "Busca de funcionários" + style_bars);
-        System.out.println("Doutor [BD] -- Enfermeiro [BE] -- Staff [BS] ---- Exit [0]");
+        System.out.println("criar -> Paciente [CP] - Doutor [CD] - Enfermeiro [CE]");
+        System.out.println("procurar -> Paciente [PP] - Doutor [PD] - Enfermeiro [PE] - Quarto[PQ]");
+        System.out.println("Mostrar Todos -> Paciente [MP] - Doutor [MD] - Enfermeiro [ME] - Quarto[MQ]");
+        System.out.println("deletar -> Paciente [DP] - Doutor [DD] - Enfermeiro [DE]");
+        System.out.println("sair -> [0]");
         System.out.print("> ");
     }
 
@@ -80,4 +121,3 @@ public class View {
     }
 
 }
-

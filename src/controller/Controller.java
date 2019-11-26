@@ -3,5 +3,5 @@ package controller;
 import db.Db;
 
 class Controller {
-    Db dataBase = new Db();
+    static Db dataBase = new Db();
 }

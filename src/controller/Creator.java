@@ -2,6 +2,7 @@ package controller;
 
 import db.Db;
 import model.facilities.Room;
+import model.misc.Cpf;
 import model.people.Patient;
 
 import java.util.ArrayList;
@@ -9,54 +10,24 @@ import java.util.Scanner;
 
 public class Creator extends Controller{
 
-    public void CreatePatient() {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Inserir Nome do Paciente:");
-        String name = input.nextLine();
-        System.out.println("Inserir CPF do paciente: ");
-        String cpf = input.nextLine();
-        System.out.println("Inserir data de nascimento: ");
-        String birthDate = input.nextLine();
-        System.out.println("Inserir tipo sanguineo: ");
-        String bloodType = input.nextLine();
-        System.out.println("Inserir genero: ");
-        String gender = input.nextLine();
-        System.out.println("Inserir plano de saude: ");
-        String healthInsurance = input.nextLine();
-        System.out.println("Inserir quarto: ");
-        String roomS = input.nextLine();
-        System.out.println("Inserir problemas do paciente (-1 para encerrar): ");
-        ArrayList<String> diseases = new ArrayList<>();
-        String disease = input.nextLine();
-        while (!disease.equals("-1")){
-            diseases.add(disease);
-            disease = input.nextLine();
-        }
+    public void createPatient(String name, Cpf cpf, String birthDate, String bloodType, String gender, String healthInsurance, String room, ArrayList<String> diseases) {
 
         Patient patient = new Patient(name, cpf, birthDate, bloodType, gender, healthInsurance, diseases);
-        while (!patient.check_cpf()){
-            System.out.println("CPF invalido, favor digitar novamente: ");
-            patient.setCpf(input.nextLine());
-        }
 
-        for (Patient value : dataBase.patientList) {
-            if (value.getCpf().equals(patient.getCpf())) {
-                System.out.println("paciente já existente");
-            } else {
-                dataBase.patientList.add(patient);
-            }
-        }
-
+        boolean found = false;
         for (Room value : dataBase.roomList) {
-            if (value.getRoom().equals(roomS)) {
+            if (!value.getRoom().equals(room)) {
                 value.addPatient(patient);
-            } else {
-                Room room = new Room(roomS);
-                room.addPatient(patient);
-                dataBase.roomList.add(room);
+                found = true;
             }
         }
-
+        if (!found) {
+            Room newRoom = new Room(room);
+            newRoom.addPatient(patient);
+            dataBase.roomList.add(newRoom);
+        }
+        
+        dataBase.patientList.add(patient);
     }
 
     public void CreateDoctor() {

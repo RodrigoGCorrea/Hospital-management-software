@@ -1,20 +1,11 @@
 package model.people;
 
+import model.misc.Cpf;
+
 import java.util.ArrayList;
 
-public class Nurse extends Staff{
-    private int floorAssigned;
-
-    public Nurse(String name, String cpf, String birthDate, String bloodType, String gender, int ID, float salary, boolean paid, ArrayList<Patient> patientsAssigned, int floorAssigned) {
-        super(name, cpf, birthDate, bloodType, gender, ID, salary, paid, patientsAssigned);
-        this.floorAssigned = floorAssigned;
-    }
-
-    public int getFloorAssigned() {
-        return floorAssigned;
-    }
-
-    public void setFloorAssigned(int floorAssigned) {
-        this.floorAssigned = floorAssigned;
+public class Nurse extends Staff {
+    public Nurse(String name, Cpf cpf, String birthDate, String bloodType, String gender, ArrayList<Patient> patientsAssigned) {
+        super(name, cpf, birthDate, bloodType, gender, patientsAssigned);
     }
 }
