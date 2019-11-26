@@ -1,15 +1,14 @@
-package people;
+package model.people;
 
-import db.Savable;
 
-public class Person extends Savable {
+public class Person {
     private String name;
     private String cpf;
     private String birthDate;
     private String bloodType;
     private String gender;
 
-    public Person (String name, String cpf, String birthDate, String bloodType, String gender) {
+    public Person(String name, String cpf, String birthDate, String bloodType, String gender) {
         this.name = name;
         this.cpf = cpf;
         this.birthDate = birthDate;
@@ -78,4 +77,5 @@ public class Person extends Savable {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
 }

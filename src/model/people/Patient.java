@@ -1,17 +1,15 @@
-package people;
+package model.people;
 
 import java.util.ArrayList;
 
-public class Patient extends people.Person{
+public class Patient extends Person {
 
     private String healthInsurance;
-    private String room;
     private ArrayList diseases;
 
-    public Patient(String name, String cpf, String birthDate, String bloodType, String gender, String healthInsurance, String room, ArrayList diseases) {
+    public Patient(String name, String cpf, String birthDate, String bloodType, String gender, String healthInsurance, ArrayList diseases) {
         super(name, cpf, birthDate, bloodType, gender);
         this.healthInsurance = healthInsurance;
-        this.room = room;
         this.diseases = diseases;
     }
 
@@ -21,14 +19,6 @@ public class Patient extends people.Person{
 
     public void setHealthInsurance(String healthInsurance) {
         this.healthInsurance = healthInsurance;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public void setRoom(String room) {
-        this.room = room;
     }
 
     public ArrayList getDiseases() {

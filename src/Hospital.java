@@ -1,5 +1,5 @@
-import functions.Creation;
-import people.Patient;
+import controller.Creation;
+import model.people.Patient;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -20,7 +20,6 @@ public class Hospital {
             switch (command.toUpperCase()) {
                 case "CP":
                     Patient aux = new Creation().CreatePatient();
-                    aux.save();
                     break;
                 case "BQ":
                     System.out.println("Quartos");
@@ -74,7 +73,7 @@ public class Hospital {
 
 
     private static void clear_console() throws IOException, InterruptedException {
-        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+//        new ProcessBuilder("clear").inheritIO().start().waitFor();
     }
 
 }
