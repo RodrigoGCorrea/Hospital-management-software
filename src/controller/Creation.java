@@ -30,7 +30,7 @@ public class Creation {
             disease = input.nextLine();
         }
         Room newRoom = new Room(room);
-        Patient aux = new Patient(name, cpf, birthDate, bloodType, gender, healthInsurance, diseases, );
+        Patient aux = new Patient(name, cpf, birthDate, bloodType, gender, healthInsurance, diseases);
         while (!aux.check_cpf()){
             System.out.println("CPF invalido, favor digitar novamente: ");
             aux.setCpf(input.nextLine());
