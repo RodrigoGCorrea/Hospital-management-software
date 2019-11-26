@@ -6,28 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Room {
-    private int room;
+    private String room;
     private List<Patient> patientList = new ArrayList<>();
 
-    public Room(int room) {
+    public Room(String room) {
         this.room = room;
     }
 
-    public int getRoom() {
+    public String getRoom() {
         return room;
     }
 
-    public void setRoom(int room) {
+    public void setRoom(String room) {
         this.room = room;
     }
 
-    public boolean addPatient(Patient patient) {
+    public void addPatient(Patient patient) {
         for (Patient value : patientList) {
             if (value.getCpf().equals(patient.getCpf())) {
-                return false;
+                return;
             }
         }
         patientList.add(patient);
-        return true;
     }
 }
