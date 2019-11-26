@@ -1,12 +1,14 @@
-import controller.Creation;
-import model.people.Patient;
+import controller.Creator;
 
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Hospital {
+public class View {
 
     private static boolean running = true;
+
+    private static Creator creator = new Creator();
+
 
     public static void main(String[] args) throws IOException, InterruptedException {
         Scanner sc = new Scanner(System.in);
@@ -19,10 +21,11 @@ public class Hospital {
 
             switch (command.toUpperCase()) {
                 case "CP":
-                    Patient aux = new Creation().CreatePatient();
+                    creator.CreatePatient();
                     break;
                 case "BQ":
                     System.out.println("Quartos");
+
                     break;
                 case "BP":
                     System.out.println("Busca paciente");
